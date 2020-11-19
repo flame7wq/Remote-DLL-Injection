@@ -110,7 +110,6 @@ BOOL DllRemoteInjection(DWORD dwProcessID, PCHAR szDllName)
 BOOL GetProcessIdByName(PCHAR szProcessName, LPDWORD lpPID)
 {
 	HANDLE         hProcessSnap = NULL;
-	BOOL           bRet = FALSE;
 	PROCESSENTRY32 pe32 = { sizeof(PROCESSENTRY32) };
 
 	hProcessSnap = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
@@ -135,12 +134,10 @@ BOOL GetProcessIdByName(PCHAR szProcessName, LPDWORD lpPID)
 				return TRUE;
 			}
 		} while (Process32Next(hProcessSnap, &pe32));
-
-		bRet = TRUE;
 	}
 	else
-		bRet = FALSE;
+		return FALSE;
 
 	CloseHandle(hProcessSnap);
-	return (bRet);
+	return FALSE;
 }
